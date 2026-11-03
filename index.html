@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nubo — jeu de rythme</title>
+<meta name="description" content="Nubo, le jeu de rythme où la balle rebondit sur ta musique. Télécharge le jeu, découvre les maps et le classement.">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<header class="top">
+  <a class="brand" href="#/"><img src="logo.png" alt=""><span>nubo</span></a>
+  <nav class="nav" id="nav">
+    <a href="#/" data-page="home">Accueil</a>
+    <a href="#/maps" data-page="maps">Maps</a>
+    <a href="#/classement" data-page="classement">Classement</a>
+  </nav>
+  <div class="top-right">
+    <a class="btn btn-light btn-sm" href="#/telecharger" data-page="telecharger">Télécharger</a>
+    <a class="me" id="me" href="#/compte">Se connecter</a>
+  </div>
+</header>
+
+<main id="view" tabindex="-1"></main>
+
+<footer class="foot">
+  <img src="logo.png" alt=""><span>nubo</span>
+  <span class="muted">Jeu de rythme pour Windows · le même compte dans le jeu et sur le site</span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
