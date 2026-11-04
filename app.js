@@ -1,10 +1,10 @@
-// Nubo — le site du jeu : téléchargement, maps, classement et profils.
+// Kizuna — le site du jeu : téléchargement, maps, classement et profils.
 // Il parle au même serveur que le jeu (Supabase) : les comptes, les maps et les
 // scores sont les mêmes. Pages (dans l'adresse après #) : / , /maps, /map/<id>,
 // /classement, /joueur/<@>, /compte, /telecharger.
 (() => {
   "use strict";
-  const C = window.NUBO;
+  const C = window.KIZUNA;
   const sb = window.supabase.createClient(C.url, C.anonKey);
   const TIERS = [
     { k: "easy", n: "Hinari", c: "#4ade80" }, { k: "moyen", n: "Kazuro", c: "#38bdf8" },
@@ -12,7 +12,7 @@
     { k: "abysse", n: "Yomirai", c: "#a855f7" }, { k: "eternite", n: "Zenkaru", c: "#fde047" },
   ];
   const TIER = Object.fromEntries(TIERS.map((t) => [t.k, t]));
-  const MAP_FIELDS = "id,deezer_id,title,artist,bpm,duration,tiers,plays,cover,created_at,author:profiles(pseudo,handle,avatar_url)";
+  const MAP_FIELDS = "id,deezer_id,title,artist,bpm,duration,tiers,plays,cover,created_at";
   const PROFILE_FIELDS = "id,pseudo,handle,avatar_url,banner_url,created_at";
   const view = document.getElementById("view");
   let me = null;          // mon profil quand je suis connecté
@@ -88,12 +88,11 @@
   }
 
   function mapCard(m) {
-    const a = m.author || {};
     return `<a class="card map-card fade-in" href="#/map/${esc(m.id)}">
       <div class="cover">${m.cover ? `<img src="${esc(m.cover)}" alt="" loading="lazy">` : ""}<span class="dur">${fmtDur(m.duration)}</span></div>
       <h3>${esc(m.title)}</h3><p class="artist">${esc(m.artist)}</p>
       ${tierDots(m.tiers)}
-      <div class="by">${avatar(a)}<span>@${esc(a.handle || "?")}</span><span class="plays">${plural(m.plays, "partie")}</span></div>
+      <div class="by"><span class="plays">${plural(m.plays, "partie")}</span></div>
     </a>`;
   }
 
@@ -206,7 +205,7 @@
   function downloadButton(version, big = true) {
     const meta = `Windows 10 / 11${version ? ` · v${esc(version)}` : ""} · ${esc(C.downloadSize)}`;
     const btn = C.download
-      ? `<a class="btn btn-light ${big ? "btn-big" : ""}" href="${esc(C.download)}" download>${ICON.down}Télécharger Nubo</a>`
+      ? `<a class="btn btn-light ${big ? "btn-big" : ""}" href="${esc(C.download)}" download>${ICON.down}Télécharger Kizuna</a>`
       : `<span class="btn btn-light ${big ? "btn-big" : ""}" aria-disabled="true" style="opacity:.6">${ICON.down}Bientôt disponible</span>`;
     return { btn, meta };
   }
@@ -228,8 +227,8 @@
       <td class="num rix">${fmtNum(p.rix)} Rix</td></tr>`).join("");
     return `
     <section class="hero"><div class="wrap fade-in">
-      <img class="hero-logo" src="logo.png" alt="Logo de Nubo">
-      <h1>nubo</h1>
+      <img class="hero-logo" src="logo.png" alt="Logo de Kizuna">
+      <h1>kizuna</h1>
       <p class="tag">Le jeu de rythme où la balle rebondit sur ta musique. Choisis n'importe quel titre, frappe au bon moment.</p>
       <div class="hero-actions">${d.btn}<a class="btn btn-big" href="#/maps">Voir les maps</a></div>
       <p class="meta">${d.meta} · gratuit</p>
@@ -256,7 +255,7 @@
       <div><h2>Pour jouer</h2><p class="sub">Trois étapes, et c'est parti.</p>
         <ol class="steps">
           <li class="card"><div><b>Télécharge le jeu</b><span>Un zip pour Windows : décompresse-le où tu veux.</span></div></li>
-          <li class="card"><div><b>Lance Nubo.exe</b><span>Si Windows affiche un avertissement : « Informations complémentaires » puis « Exécuter quand même ».</span></div></li>
+          <li class="card"><div><b>Lance Kizuna.exe</b><span>Si Windows affiche un avertissement : « Informations complémentaires » puis « Exécuter quand même ».</span></div></li>
           <li class="card"><div><b>Crée ton compte</b><span>Le même compte marche ici, sur le site, pour ton profil.</span></div></li>
         </ol></div>
     </section>
@@ -272,17 +271,17 @@
     const version = await latestVersion();
     const d = downloadButton(version);
     return `<div class="wrap">
-      <div class="page-head"><div><h1>Télécharger Nubo</h1><p>Gratuit, pour Windows.</p></div></div>
+      <div class="page-head"><div><h1>Télécharger Kizuna</h1><p>Gratuit, pour Windows.</p></div></div>
       <div class="card" style="padding:32px;display:flex;flex-wrap:wrap;gap:28px;align-items:center">
         <img src="logo.png" alt="" style="width:140px;border-radius:30px;box-shadow:0 0 60px rgba(173,153,219,.4)">
-        <div style="flex:1;min-width:240px"><h2 style="margin:0 0 6px;font-size:28px">Nubo pour Windows</h2>
+        <div style="flex:1;min-width:240px"><h2 style="margin:0 0 6px;font-size:28px">Kizuna pour Windows</h2>
           <p class="muted" style="margin:0 0 18px">${d.meta}</p>${d.btn}</div>
       </div>
       <section class="section two">
         <div><h2>Installation</h2><p class="sub">Pas d'installateur : tout est dans le dossier.</p>
           <ol class="steps">
-            <li class="card"><div><b>Décompresse Nubo.zip</b><span>Clic droit → « Extraire tout », dans le dossier de ton choix (Bureau, Documents…).</span></div></li>
-            <li class="card"><div><b>Lance Nubo.exe</b><span>Windows peut prévenir que l'application est inconnue : « Informations complémentaires » → « Exécuter quand même ».</span></div></li>
+            <li class="card"><div><b>Décompresse Kizuna.zip</b><span>Clic droit → « Extraire tout », dans le dossier de ton choix (Bureau, Documents…).</span></div></li>
+            <li class="card"><div><b>Lance Kizuna.exe</b><span>Windows peut prévenir que l'application est inconnue : « Informations complémentaires » → « Exécuter quand même ».</span></div></li>
             <li class="card"><div><b>Crée ton compte</b><span>Photo, pseudo, @, mail et mot de passe. Tu peux ensuite te connecter ici avec le même compte.</span></div></li>
           </ol></div>
         <div><h2>Mises à jour</h2><p class="sub">Rien à retélécharger.</p>
@@ -337,7 +336,6 @@
     if (!m) return `<div class="wrap empty">Map introuvable.</div>`;
     const tiers = m.tiers || {};
     const first = TIERS.find((t) => tiers[t.k] && t.k === "moyen") || TIERS.find((t) => tiers[t.k]) || TIERS[0];
-    const a = m.author || {};
     const tabs = TIERS.map((t) => {
       const has = tiers[t.k];
       return `<button class="tier-tab ${t.k === first.k ? "on" : ""}" style="color:${t.c}" data-k="${t.k}" ${has ? "" : "disabled"}>
@@ -349,8 +347,7 @@
         <div class="in">${m.cover ? `<img class="big" src="${esc(m.cover)}" alt="">` : ""}
           <div><h1>${esc(m.title)}</h1><p class="artist">${esc(m.artist)}</p>
             <div class="facts"><span class="fact">${Math.round(m.bpm || 0)} BPM</span><span class="fact">${fmtDur(m.duration)}</span>
-              <span class="fact">${plural(m.plays, "partie")}</span>
-              <a class="fact" href="#/joueur/${esc(encodeURIComponent(a.handle || ""))}">partagée par @${esc(a.handle || "?")}</a></div>
+              <span class="fact">${plural(m.plays, "partie")}</span></div>
             <p class="muted" style="margin:14px 0 0;font-size:14px">Pour la jouer : dans le jeu, page <b>Maps</b>, cherche « ${esc(m.title)} ».</p></div></div></div>
       <div class="tier-tabs" id="tabs">${tabs}</div>
       <div class="card" id="top"></div></div>`;
@@ -617,7 +614,7 @@
           if (!existing.data) await finishProfile(s.session.user.id);
         }
         await loadMe();
-        toast("Bienvenue sur Nubo !");
+        toast("Bienvenue sur Kizuna !");
         location.hash = `#/joueur/${encodeURIComponent(me.handle)}`;
       } catch (err) {
         console.error(err);

@@ -1,4 +1,4 @@
-/* Nubo — site du jeu. Même thème que le jeu : ciel de nuit violet, nébuleuse, étoiles. */
+/* Kizuna — site du jeu. Même thème que le jeu : ciel de nuit violet, nébuleuse, étoiles. */
 :root {
   --top: #14111d;
   --bottom: #060509;
@@ -132,7 +132,7 @@ button, input { font: inherit; color: inherit; }
 .dots em { font-style: normal; font-size: 12px; font-weight: 800; margin-left: 6px; color: #d9dbe1; }
 .by { display: flex; align-items: center; gap: 8px; margin: 12px 6px 0; font-size: 12px; color: rgba(244, 244, 246, 0.7); }
 .by .av { width: 20px; height: 20px; }
-.by .plays { margin-left: auto; color: var(--muted); }
+.by .plays { color: var(--muted); }
 .empty { padding: 60px 20px; text-align: center; color: var(--muted); }
 
 /* --- détail d'une map ------------------------------------------------------- */
